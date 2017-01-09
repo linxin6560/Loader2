@@ -7,3 +7,7 @@ lib-loader-rxcache是用RxJava2进行缓存读写,如果不想用RxJava2，则�
 <br />
 #使用方法
 使用方法与Loader的使用方法大体一致，但若要实现缓存，则需要在Model中setCacheHelper
+
+    compile 'com.github.linxin6560:loader-base:2.0.0'
+    compile 'com.github.linxin6560:loader-retrofit:2.0.0'
+    compile 'com.github.linxin6560:loader-rxcache:2.0.0'
