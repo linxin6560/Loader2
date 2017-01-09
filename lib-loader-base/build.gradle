@@ -1,0 +1,36 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+publish {
+    userOrg = 'linxin6560'//bintray.com用户名
+    groupId = 'com.github.linxin6560'//jcenter上的路径
+    artifactId = 'loader-base'//项目名称
+    publishVersion = '2.0.0'//版本号
+    desc = '一个简化安卓加载逻辑过程的library'//描述
+    website = 'https://github.com/linxin6560/Loader'//网站
+}
