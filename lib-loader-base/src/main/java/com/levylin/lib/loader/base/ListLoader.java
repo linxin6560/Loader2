@@ -14,7 +14,7 @@ public class ListLoader<INFO, ITEM> extends DataLoader<INFO> implements OnLoadMo
     private IListModel<INFO, ITEM> model;
     private IListViewHelper mListViewHelper;
 
-    public ListLoader(INetworkView view, IListModel<INFO, ITEM> listModel) {
+    public ListLoader(ILoaderView view, IListModel<INFO, ITEM> listModel) {
         super(view, listModel);
         this.model = listModel;
     }

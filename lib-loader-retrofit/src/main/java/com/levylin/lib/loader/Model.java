@@ -23,6 +23,7 @@ public abstract class Model<T> implements IModel<T> {
      *
      * @return
      */
+    @Override
     public boolean isManualRefresh() {
         return isManualRefresh;
     }
@@ -30,6 +31,7 @@ public abstract class Model<T> implements IModel<T> {
     /**
      * 重置手动刷新为false
      */
+    @Override
     public void setManualRefresh(boolean isManualRefresh) {
         this.isManualRefresh = isManualRefresh;
     }
@@ -37,6 +39,7 @@ public abstract class Model<T> implements IModel<T> {
     /**
      * 刷新前要做的操作,一般用于改变缓存类型
      */
+    @Override
     public void preRefresh() {
         if (cacheHelper != null) {
             cacheHelper.preRefresh();
@@ -46,6 +49,7 @@ public abstract class Model<T> implements IModel<T> {
     /**
      * 重新加载前要做的操作,一般用于改变缓存类型
      */
+    @Override
     public void preReLoad() {
         if (cacheHelper != null) {
             cacheHelper.preReLoad();
@@ -57,6 +61,7 @@ public abstract class Model<T> implements IModel<T> {
      *
      * @param listener 加载监听
      */
+    @Override
     public final void load(final OnLoadListener<T> listener) {
         if (cacheHelper != null) {
             cacheHelper.load(getModelCall(), listener);
@@ -80,6 +85,7 @@ public abstract class Model<T> implements IModel<T> {
     /**
      * 取消加载
      */
+    @Override
     public void cancel() {
         if (cacheHelper != null) {
             cacheHelper.cancel();

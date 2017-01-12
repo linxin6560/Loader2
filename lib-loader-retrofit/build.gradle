@@ -37,14 +37,14 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile project(':lib-loader-base')
+    compile 'com.github.linxin6560:loader-base:2.0.0'
 }
 
 publish {
     userOrg = 'linxin6560'//bintray.com用户名
     groupId = 'com.github.linxin6560'//jcenter上的路径
     artifactId = 'loader-retrofit'//项目名称
-    publishVersion = '2.0.0'//版本号
-    desc = '一个简化安卓加载逻辑过程的library'//描述
-    website = 'https://github.com/linxin6560/Loader'//网站
+    publishVersion = '2.0.1'//版本号
+    desc = 'a model library for simple load logic'//描述
+    website = 'https://github.com/linxin6560/Loader2'//网站
 }

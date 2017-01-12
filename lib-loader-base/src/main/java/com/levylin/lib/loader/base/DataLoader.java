@@ -20,9 +20,9 @@ public class DataLoader<T> implements OnRefreshListener, OnReloadListener {
     IRefreshViewHelper mRefreshViewHelper;
     OnLoadSuccessListener<T> onLoadSuccessListener;
     OnLoadFailureListener onLoadFailureListener;
-    private INetworkView view;
+    private ILoaderView view;
 
-    public DataLoader(INetworkView view, IModel<T> model) {
+    public DataLoader(ILoaderView view, IModel<T> model) {
         this.view = view;
         this.model = model;
         this.view.setDataLoader(this);

@@ -38,13 +38,13 @@ public abstract class ListModel<INFO, ITEM> extends Model<INFO> implements IList
 
     @Override
     public void setData(boolean isRefreshing, INFO response) {
+        if (page == FIRST_PAGE) {
+            clear();
+        }
         List<ITEM> mapList = map(response);
         hasNext = ensureHasNext(response, mapList);
         if (mapList == null) {
             return;
-        }
-        if (page == FIRST_PAGE) {
-            clear();
         }
         if (isLoadMoreFromEnd) {
             mList.addAll(mapList);
@@ -58,6 +58,7 @@ public abstract class ListModel<INFO, ITEM> extends Model<INFO> implements IList
         return mList.isEmpty();
     }
 
+    @Override
     public boolean hasNext() {
         return hasNext;
     }
@@ -69,6 +70,7 @@ public abstract class ListModel<INFO, ITEM> extends Model<INFO> implements IList
      * @param mapList
      * @return
      */
+    @Override
     public abstract boolean ensureHasNext(INFO response, List<ITEM> mapList);
 
     /**
@@ -77,5 +79,6 @@ public abstract class ListModel<INFO, ITEM> extends Model<INFO> implements IList
      * @param response
      * @return
      */
+    @Override
     public abstract List<ITEM> map(INFO response);
 }
