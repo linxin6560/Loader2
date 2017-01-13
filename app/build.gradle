@@ -33,4 +33,5 @@ dependencies {
     compile project(':lib-loader-base')
     compile project(':lib-loader-retrofit')
     compile project(':lib-loader-rxcache')
+    compile project(':lib-loader-helper')
 }

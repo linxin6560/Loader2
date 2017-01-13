@@ -11,12 +11,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.levylin.lib.loader.base.ListLoader;
+import com.levylin.lib.loader.helper.RecyclerViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import me.levylin.loader.helper.FooterViewHelper;
 import me.levylin.loader.helper.LoadStateHelper;
-import me.levylin.loader.helper.RecyclerViewHelper;
 import me.levylin.loader.helper.RefreshHelper;
 import me.levylin.loader.model.ListDataModel;
 
@@ -42,7 +43,7 @@ public class ListDataActivity extends BaseActivity {
         ListLoader<String, String> loader = new ListLoader<>(this, model);
         loader.setLoadStateHelper(new LoadStateHelper(layout));//控制加载中，加载失败，加载成功
         loader.setRefreshViewHelper(new RefreshHelper(layout));//控制刷新
-        loader.setListViewHelper(new RecyclerViewHelper(recyclerView));//控制自动加载下一页
+        loader.setListViewHelper(new RecyclerViewHelper(recyclerView, new FooterViewHelper(recyclerView)));//控制自动加载下一页
         loader.load();
     }
 

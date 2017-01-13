@@ -1,4 +1,4 @@
-package me.levylin.loader.helper;
+package com.levylin.lib.loader.helper;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,20 +14,19 @@ import com.levylin.lib.loader.base.helper.listener.OnReloadListener;
  * RecyclerView帮助类基类
  * Created by LinXin on 2016/11/1 11:08.
  */
-abstract class BaseRecyclerViewHelper implements IListViewHelper {
+public class RecyclerViewHelper implements IListViewHelper {
 
     //底部加载更多帮助类
     IFooterViewHelper mFooterViewHelper;
     private RecyclerView mRecyclerView;
     //最后一项可见监听
     private OnLoadMoreListener mLoadMoreListener;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerLoadMoreAdapter mAdapter;
     //当前滑动状态
     private int mCurrentScrollState = -1;
 
-    BaseRecyclerViewHelper(final RecyclerView recyclerView, IFooterViewHelper footerViewHelper) {
+    public RecyclerViewHelper(final RecyclerView recyclerView, IFooterViewHelper footerViewHelper) {
         mRecyclerView = recyclerView;
-        mAdapter = recyclerView.getAdapter();
         mFooterViewHelper = footerViewHelper;
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -36,6 +35,18 @@ abstract class BaseRecyclerViewHelper implements IListViewHelper {
                 ifNeedLoadMore(recyclerView);
             }
         });
+        initFooterViewHelper(footerViewHelper);
+    }
+
+    /**
+     * 初始化底部视图
+     */
+    private void initFooterViewHelper(IFooterViewHelper mFooterViewHelper) {
+        this.mFooterViewHelper = mFooterViewHelper;
+        mAdapter = new RecyclerLoadMoreAdapter(mRecyclerView, mFooterViewHelper.getFooterView());
+        mAdapter.setShowFooterView(false);
+        mRecyclerView.setAdapter(mAdapter);
+        showLoadMoreIdle();
     }
 
     /**
@@ -141,5 +152,33 @@ abstract class BaseRecyclerViewHelper implements IListViewHelper {
             lastVisiblePosition = getMax(positions);
         }
         return lastVisiblePosition;
+    }
+
+    @Override
+    public void showLoadMoreError() {
+        if (mAdapter.getDelegate().getItemCount() > 1) {
+            mAdapter.setShowFooterView(true);
+            mFooterViewHelper.showError();
+        }
+    }
+
+    @Override
+    public void showLoadMoreIdle() {
+        if (mAdapter.getDelegate().getItemCount() > 1) {
+            mAdapter.setShowFooterView(true);
+            mFooterViewHelper.showIdle();
+        }
+    }
+
+    @Override
+    public void showLoadMoreLoading() {
+        mAdapter.setShowFooterView(true);
+        mFooterViewHelper.showLoading();
+    }
+
+    @Override
+    public void showLoadMoreNoMore() {
+        mAdapter.setShowFooterView(!mFooterViewHelper.isGoneWhenNoMore() && isNeedShowNoMore());
+        mFooterViewHelper.showNoMore();
     }
 }
