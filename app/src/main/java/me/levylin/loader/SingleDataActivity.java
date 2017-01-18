@@ -11,6 +11,7 @@ import com.levylin.lib.loader.base.listener.OnLoadSuccessListener;
 import me.levylin.loader.helper.LoadStateHelper;
 import me.levylin.loader.helper.RefreshHelper;
 import me.levylin.loader.model.SingleDataModel;
+import me.levylin.loader.model.SingleDataModel2;
 
 /**
  * 单页数据Activity
@@ -24,7 +25,7 @@ public class SingleDataActivity extends BaseActivity {
         setContentView(R.layout.act_single_data);
         SwipeRefreshLayout layout = (SwipeRefreshLayout) findViewById(R.id.act_single_data_sfl);
         final TextView textView = (TextView) findViewById(R.id.act_single_data_tv);
-        SingleDataModel model = new SingleDataModel();
+        SingleDataModel2 model = new SingleDataModel2();
         DataLoader<String> loader = new DataLoader<>(this, model);
         loader.setLoadStateHelper(new LoadStateHelper(layout));
         loader.setRefreshViewHelper(new RefreshHelper(layout));
