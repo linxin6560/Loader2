@@ -47,5 +47,22 @@ public abstract class ListModel<INFO, ITEM> extends Model<INFO> implements IList
         itemList.addAll(mapList);
     }
 
+    @Override
+    public boolean ensureHasNext(INFO response, List<ITEM> mapList) {
+        return mapList != null && mapList.size() == getPageSize();
+    }
+
+    /**
+     * 生成请求器
+     *
+     * @return
+     */
     protected abstract IListRequest<INFO> makeRequest();
+
+    /**
+     * 获取每页数量
+     *
+     * @return
+     */
+    protected abstract int getPageSize();
 }
