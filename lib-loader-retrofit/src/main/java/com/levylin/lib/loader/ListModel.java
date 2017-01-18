@@ -70,8 +70,7 @@ public abstract class ListModel<INFO, ITEM> extends Model<INFO> implements IList
      * @param mapList
      * @return
      */
-    @Override
-    public abstract boolean ensureHasNext(INFO response, List<ITEM> mapList);
+    protected abstract boolean ensureHasNext(INFO response, List<ITEM> mapList);
 
     /**
      * 数据转换

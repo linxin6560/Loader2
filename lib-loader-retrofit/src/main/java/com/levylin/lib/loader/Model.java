@@ -15,26 +15,7 @@ import retrofit2.Response;
 public abstract class Model<T> implements IModel<T> {
 
     private Call<T> mCall;
-    private boolean isManualRefresh = false;//手动刷新
     protected ICacheHelper<T> cacheHelper;
-
-    /**
-     * 是否手动刷新
-     *
-     * @return
-     */
-    @Override
-    public boolean isManualRefresh() {
-        return isManualRefresh;
-    }
-
-    /**
-     * 重置手动刷新为false
-     */
-    @Override
-    public void setManualRefresh(boolean isManualRefresh) {
-        this.isManualRefresh = isManualRefresh;
-    }
 
     /**
      * 刷新前要做的操作,一般用于改变缓存类型

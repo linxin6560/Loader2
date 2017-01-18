@@ -15,16 +15,6 @@ public abstract class NetModel<T> extends Model<T> {
     private Call<T> call;
 
     @Override
-    public void preRefresh() {
-
-    }
-
-    @Override
-    public void preReLoad() {
-
-    }
-
-    @Override
     public void load(final OnLoadListener<T> listener) {
         System.out.println("RetrofitRequest....load");
         listener.onStart();

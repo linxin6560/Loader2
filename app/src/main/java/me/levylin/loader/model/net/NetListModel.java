@@ -44,7 +44,6 @@ public abstract class NetListModel<INFO, ITEM> extends ListModel<INFO, ITEM> {
 
     @Override
     public void load(final OnLoadListener<INFO> listener) {
-        System.out.println("RetrofitListRequest....load");
         listener.onStart();
         if (call == null) {
             call = makeCall();
@@ -52,7 +51,6 @@ public abstract class NetListModel<INFO, ITEM> extends ListModel<INFO, ITEM> {
         call.enqueue(new Callback<INFO>() {
             @Override
             public void onResponse(Call<INFO> call, Response<INFO> response) {
-                System.out.println("response=" + response.body());
                 listener.onSuccess(response.body());
             }
 
