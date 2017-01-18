@@ -37,14 +37,14 @@ public class ListLoader<INFO, ITEM> extends DataLoader<INFO> implements OnLoadMo
             @Override
             public void onSuccess(INFO response) {
                 showContent(response);
-                model.setManualRefresh(false);
+                isSilenceRefresh = false;
             }
 
             @Override
             public void onError(Throwable throwable) {
                 throwable.printStackTrace();
                 showError(throwable);
-                model.setManualRefresh(false);
+                isSilenceRefresh = false;
             }
         });
     }
@@ -88,7 +88,6 @@ public class ListLoader<INFO, ITEM> extends DataLoader<INFO> implements OnLoadMo
      * 显示内容
      */
     private void showContent(INFO responseModel) {
-        System.out.println("showContent....isRefreshing()=" + isRefreshing());
         model.setData(isRefreshing(), responseModel);
         if (isRefreshing() && mRefreshViewHelper != null) {
             mRefreshViewHelper.refreshComplete(true);

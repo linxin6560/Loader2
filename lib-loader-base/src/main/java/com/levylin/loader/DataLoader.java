@@ -15,11 +15,12 @@ import com.levylin.loader.model.IModel;
  */
 public class DataLoader<T> implements OnRefreshListener, OnReloadListener {
 
-    private IModel<T> model;
     ILoadStateHelper mLoadStateViewHelper;
     IRefreshViewHelper mRefreshViewHelper;
     OnLoadSuccessListener<T> onLoadSuccessListener;
     OnLoadFailureListener onLoadFailureListener;
+    boolean isSilenceRefresh;//是否手动刷新
+    private IModel<T> model;
     private ILoaderView view;
 
     public DataLoader(ILoaderView view, IModel<T> model) {
@@ -46,6 +47,23 @@ public class DataLoader<T> implements OnRefreshListener, OnReloadListener {
         this.onLoadFailureListener = listener;
     }
 
+
+    /**
+     * 是否手动刷新
+     *
+     * @return
+     */
+    public boolean isSilenceRefresh() {
+        return isSilenceRefresh;
+    }
+
+    /**
+     * 重置手动刷新为false
+     */
+    public void setSilenceRefresh(boolean isManualRefresh) {
+        this.isSilenceRefresh = isManualRefresh;
+    }
+
     public void load() {
         cancel();
         model.load(new OnLoadListener<T>() {
@@ -57,23 +75,23 @@ public class DataLoader<T> implements OnRefreshListener, OnReloadListener {
             @Override
             public void onSuccess(T response) {
                 showContent(response);
-                model.setManualRefresh(false);
+                isSilenceRefresh = false;
             }
 
             @Override
             public void onError(Throwable throwable) {
                 throwable.printStackTrace();
                 showError(throwable);
-                model.setManualRefresh(false);
+                isSilenceRefresh = false;
             }
         });
     }
 
     /**
-     * 手动刷新
+     * 静默刷新
      */
-    public void manualRefresh() {
-        model.setManualRefresh(true);
+    public void silenceRefresh() {
+        isSilenceRefresh = true;
         onRefresh();
     }
 
@@ -113,7 +131,7 @@ public class DataLoader<T> implements OnRefreshListener, OnReloadListener {
      * @return true:是，false:否
      */
     protected boolean isRefreshing() {
-        return (mRefreshViewHelper != null && mRefreshViewHelper.isRefreshing()) || model.isManualRefresh();
+        return (mRefreshViewHelper != null && mRefreshViewHelper.isRefreshing()) || isSilenceRefresh;
     }
 
     /**

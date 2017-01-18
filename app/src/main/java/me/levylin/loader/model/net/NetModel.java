@@ -1,7 +1,7 @@
-package me.levylin.loader.model.provider;
+package me.levylin.loader.model.net;
 
 import com.levylin.loader.listener.OnLoadListener;
-import com.levylin.loader.model.impl.provider.IProvider;
+import com.levylin.loader.model.impl.Model;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -10,7 +10,7 @@ import retrofit2.Response;
 /**
  * Created by LinXin on 2017/1/18 10:41.
  */
-public abstract class RetrofitProvider<T> implements IProvider<T> {
+public abstract class NetModel<T> extends Model<T> {
 
     private Call<T> call;
 

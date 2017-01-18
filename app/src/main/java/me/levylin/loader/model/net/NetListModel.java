@@ -1,7 +1,7 @@
-package me.levylin.loader.model.provider;
+package me.levylin.loader.model.net;
 
 import com.levylin.loader.listener.OnLoadListener;
-import com.levylin.loader.model.impl.provider.IListProvider;
+import com.levylin.loader.model.impl.ListModel;
 
 import java.util.List;
 
@@ -12,11 +12,15 @@ import retrofit2.Response;
 /**
  * Created by LinXin on 2017/1/18 10:41.
  */
-public abstract class RetrofitListProvider<INFO, ITEM> implements IListProvider<INFO, ITEM> {
+public abstract class NetListModel<INFO, ITEM> extends ListModel<INFO, ITEM> {
 
     private static final int PAGE_SIZE = 10;
     private Call<INFO> call;
     protected int page;
+
+    public NetListModel(List<ITEM> items) {
+        super(items);
+    }
 
     @Override
     public void preRefresh() {

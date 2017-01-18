@@ -24,19 +24,7 @@ public interface IModel<T> {
     void setData(boolean isRefreshing, T response);
 
     /**
-     * 是否手动刷新
-     *
-     * @return
-     */
-    boolean isManualRefresh();
-
-    /**
-     * 重置手动刷新为false
-     */
-    void setManualRefresh(boolean isManualRefresh);
-
-    /**
-     * 刷新前要做的操作,一般用于改变缓存类型
+     * 刷新前要做的操作,一般用于改变缓存类型,列表页面须用次方法将页码归零
      */
     void preRefresh();
 

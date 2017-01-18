@@ -1,7 +1,6 @@
 package com.levylin.loader.model.impl;
 
 import com.levylin.loader.model.IListModel;
-import com.levylin.loader.model.impl.provider.IListProvider;
 
 import java.util.List;
 
@@ -10,18 +9,23 @@ import java.util.List;
  * Created by LinXin on 2017/1/18 10:12.
  */
 public abstract class ListModel<INFO, ITEM> extends Model<INFO> implements IListModel<INFO, ITEM> {
+    protected static int FIRST_PAGE = 0;
+    protected static int PAGE_SIZE = 10;
     protected List<ITEM> mList;
-    private IListProvider<INFO, ITEM> request;
+    protected int page;
     private boolean hasNext;
 
     public ListModel(List<ITEM> itemList) {
         this.mList = itemList;
-        request = makeProvider();
     }
 
     @Override
     public boolean isEmpty() {
         return mList == null || mList.isEmpty();
+    }
+
+    protected boolean ensureHasNext(INFO response, List<ITEM> mapList) {
+        return mapList != null && mapList.size() == PAGE_SIZE;
     }
 
     @Override
@@ -31,7 +35,12 @@ public abstract class ListModel<INFO, ITEM> extends Model<INFO> implements IList
 
     @Override
     public void preLoadNext() {
-        request.preLoadNext();
+        page++;
+    }
+
+    @Override
+    public void preRefresh() {
+        page = FIRST_PAGE;
     }
 
     @Override
@@ -41,22 +50,14 @@ public abstract class ListModel<INFO, ITEM> extends Model<INFO> implements IList
 
     @Override
     public void setData(boolean isRefreshing, INFO response) {
-        System.out.println("isRefreshing=" + isRefreshing);
         if (isRefreshing) {
             clear();
         }
         List<ITEM> mapList = map(response);
-        hasNext = request.ensureHasNext(response, mapList);
+        hasNext = ensureHasNext(response, mapList);
         if (mapList == null) {
             return;
         }
         mList.addAll(mapList);
     }
-
-    /**
-     * 生成请求器
-     *
-     * @return
-     */
-    protected abstract IListProvider<INFO, ITEM> makeProvider();
 }
