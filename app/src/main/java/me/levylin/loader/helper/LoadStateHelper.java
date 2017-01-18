@@ -74,11 +74,6 @@ public class LoadStateHelper implements ILoadStateHelper {
 
     @Override
     public void setReloadListener(final OnReloadListener listener) {
-        mErrorView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onReLoad();
-            }
-        });
+        mErrorView.setOnClickListener(v -> listener.onReLoad());
     }
 }

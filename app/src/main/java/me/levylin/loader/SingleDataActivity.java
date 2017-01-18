@@ -29,12 +29,7 @@ public class SingleDataActivity extends BaseActivity {
         DataLoader<String> loader = new DataLoader<>(this, model);
         loader.setLoadStateHelper(new LoadStateHelper(layout));
         loader.setRefreshViewHelper(new RefreshHelper(layout));
-        loader.setOnLoadSuccessListener(new OnLoadSuccessListener<String>() {
-            @Override
-            public void onSuccess(boolean isRefreshing, String response) {
-                textView.setText(response);
-            }
-        });
+        loader.setOnLoadSuccessListener((isRefreshing, response) -> textView.setText(response));
         loader.load();
     }
 }

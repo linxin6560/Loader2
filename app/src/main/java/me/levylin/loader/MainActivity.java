@@ -14,19 +14,13 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main);
-        findViewById(R.id.load_single_data_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SingleDataActivity.class);
-                startActivity(intent);
-            }
+        findViewById(R.id.load_single_data_btn).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SingleDataActivity.class);
+            startActivity(intent);
         });
-        findViewById(R.id.load_list_data_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ListDataActivity.class);
-                startActivity(intent);
-            }
+        findViewById(R.id.load_list_data_btn).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ListDataActivity.class);
+            startActivity(intent);
         });
     }
 }
