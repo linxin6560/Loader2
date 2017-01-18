@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.widget.TextView;
 
 import com.levylin.loader.DataLoader;
+import com.levylin.loader.listener.OnLoadSuccessListener;
 
 import me.levylin.loader.helper.LoadStateHelper;
 import me.levylin.loader.helper.RefreshHelper;
@@ -27,7 +28,12 @@ public class SingleDataActivity extends BaseActivity {
         DataLoader<String> loader = new DataLoader<>(this, model);
         loader.setLoadStateHelper(new LoadStateHelper(layout));
         loader.setRefreshViewHelper(new RefreshHelper(layout));
-        loader.setOnLoadSuccessListener((isRefreshing, response) -> textView.setText(response));
+        loader.setOnLoadSuccessListener(new OnLoadSuccessListener<String>() {
+            @Override
+            public void onSuccess(boolean isRefreshing, String response) {
+                textView.setText(response);
+            }
+        });
         loader.load();
     }
 }

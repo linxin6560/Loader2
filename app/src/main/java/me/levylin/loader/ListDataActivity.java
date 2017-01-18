@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.levylin.lib.loader.base.ListLoader;
 import com.levylin.lib.loader.helper.RecyclerViewHelper;
+import com.levylin.loader.ListLoader;
 
 import java.util.ArrayList;
 import java.util.List;

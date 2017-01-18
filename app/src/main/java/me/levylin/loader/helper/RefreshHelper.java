@@ -24,7 +24,12 @@ public class RefreshHelper implements IRefreshViewHelper {
 
     @Override
     public void setOnRefreshListener(final OnRefreshListener listener) {
-        mRefreshLayout.setOnRefreshListener(listener::onRefresh);
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listener.onRefresh();
+            }
+        });
     }
 
     @Override
