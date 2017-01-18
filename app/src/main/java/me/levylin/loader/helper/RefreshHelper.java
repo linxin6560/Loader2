@@ -2,8 +2,8 @@ package me.levylin.loader.helper;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 
-import com.levylin.lib.loader.base.helper.intf.IRefreshViewHelper;
-import com.levylin.lib.loader.base.helper.listener.OnRefreshListener;
+import com.levylin.loader.helper.intf.IRefreshViewHelper;
+import com.levylin.loader.helper.listener.OnRefreshListener;
 
 /**
  * 刷新帮助类

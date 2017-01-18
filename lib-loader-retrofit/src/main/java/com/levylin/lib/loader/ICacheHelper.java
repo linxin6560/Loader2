@@ -1,6 +1,6 @@
 package com.levylin.lib.loader;
 
-import com.levylin.lib.loader.base.listener.OnLoadListener;
+import com.levylin.loader.listener.OnLoadListener;
 
 import retrofit2.Call;
 

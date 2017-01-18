@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.levylin.lib.loader.base.helper.intf.IFooterViewHelper;
-import com.levylin.lib.loader.base.helper.listener.OnReloadListener;
-import com.levylin.lib.loader.base.helper.state.LoadMoreState;
+import com.levylin.loader.helper.intf.IFooterViewHelper;
+import com.levylin.loader.helper.listener.OnReloadListener;
+import com.levylin.loader.helper.state.LoadMoreState;
 
 import me.levylin.loader.R;
 

@@ -1,6 +1,6 @@
 package com.levylin.lib.loader;
 
-import com.levylin.lib.loader.base.model.IListModel;
+import com.levylin.loader.model.IListModel;
 
 import java.util.List;
 

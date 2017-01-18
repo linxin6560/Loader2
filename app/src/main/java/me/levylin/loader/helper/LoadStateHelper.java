@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.levylin.lib.loader.base.helper.intf.ILoadStateHelper;
-import com.levylin.lib.loader.base.helper.listener.OnReloadListener;
+import com.levylin.loader.helper.intf.ILoadStateHelper;
+import com.levylin.loader.helper.listener.OnReloadListener;
 
 import me.levylin.loader.R;
 
@@ -38,6 +38,7 @@ public class LoadStateHelper implements ILoadStateHelper {
 
     @Override
     public void showContent() {
+        System.out.println("showContent......");
         mContentView.setVisibility(View.VISIBLE);
         mLoadingView.setVisibility(View.GONE);
         mEmptyView.setVisibility(View.GONE);

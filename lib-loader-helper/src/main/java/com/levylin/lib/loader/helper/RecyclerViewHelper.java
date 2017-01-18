@@ -5,10 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.AbsListView;
 
-import com.levylin.lib.loader.base.helper.intf.IFooterViewHelper;
-import com.levylin.lib.loader.base.helper.intf.IListViewHelper;
-import com.levylin.lib.loader.base.helper.listener.OnLoadMoreListener;
-import com.levylin.lib.loader.base.helper.listener.OnReloadListener;
+import com.levylin.loader.helper.intf.IFooterViewHelper;
+import com.levylin.loader.helper.intf.IListViewHelper;
+import com.levylin.loader.helper.listener.OnLoadMoreListener;
+import com.levylin.loader.helper.listener.OnReloadListener;
 
 /**
  * RecyclerView帮助类基类

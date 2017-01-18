@@ -1,12 +1,15 @@
 package me.levylin.loader.model;
 
-import com.levylin.lib.loader.ListModel;
+
+import com.levylin.loader.model.impl.ListModel;
+import com.levylin.loader.model.impl.provider.IListProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import me.levylin.loader.api.ApiManager;
 import me.levylin.loader.api.MainApi;
+import me.levylin.loader.model.provider.RetrofitListProvider;
 import retrofit2.Call;
 
 /**
@@ -19,8 +22,22 @@ public class ListDataModel extends ListModel<String, String> {
     }
 
     @Override
-    public boolean ensureHasNext(String response, List<String> mapList) {
-        return page < 10;
+    protected IListProvider<String, String> makeProvider() {
+        return new RetrofitListProvider<String, String>() {
+
+            @Override
+            public boolean ensureHasNext(String response, List<String> mapList) {
+                System.out.println("ensureHasNext=" + mapList);
+                return page < 10;
+            }
+
+
+            @Override
+            protected Call<String> makeCall() {
+                MainApi api = ApiManager.getInstance().getMainApi();
+                return api.getTestCall();
+            }
+        };
     }
 
     @Override
@@ -31,11 +48,5 @@ public class ListDataModel extends ListModel<String, String> {
             list.add((i + size) + ":XXXXXXXXXXXXXXXXXXXXXXXXXX");
         }
         return list;
-    }
-
-    @Override
-    protected Call<String> getModelCall() {
-        MainApi api = ApiManager.getInstance().getMainApi();
-        return api.getTestCall();
     }
 }

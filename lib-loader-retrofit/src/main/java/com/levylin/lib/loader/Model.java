@@ -1,7 +1,7 @@
 package com.levylin.lib.loader;
 
-import com.levylin.lib.loader.base.listener.OnLoadListener;
-import com.levylin.lib.loader.base.model.IModel;
+import com.levylin.loader.listener.OnLoadListener;
+import com.levylin.loader.model.IModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;

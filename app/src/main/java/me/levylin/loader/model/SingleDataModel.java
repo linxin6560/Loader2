@@ -1,11 +1,11 @@
 package me.levylin.loader.model;
 
-import android.text.TextUtils;
-
-import com.levylin.lib.loader.Model;
+import com.levylin.loader.model.impl.Model;
+import com.levylin.loader.model.impl.provider.IProvider;
 
 import me.levylin.loader.api.ApiManager;
 import me.levylin.loader.api.MainApi;
+import me.levylin.loader.model.provider.RetrofitProvider;
 import retrofit2.Call;
 
 /**
@@ -13,21 +13,15 @@ import retrofit2.Call;
  */
 public class SingleDataModel extends Model<String> {
 
-    private String response;
-
     @Override
-    public boolean isEmpty() {
-        return TextUtils.isEmpty(response);
-    }
+    protected IProvider<String> makeProvider() {
+        return new RetrofitProvider<String>() {
 
-    @Override
-    public void setData(boolean isRefreshing, String response) {
-        this.response = response;
-    }
-
-    @Override
-    protected Call<String> getModelCall() {
-        MainApi api = ApiManager.getInstance().getMainApi();
-        return api.getTestCall();
+            @Override
+            protected Call<String> makeCall() {
+                MainApi api = ApiManager.getInstance().getMainApi();
+                return api.getTestCall();
+            }
+        };
     }
 }
