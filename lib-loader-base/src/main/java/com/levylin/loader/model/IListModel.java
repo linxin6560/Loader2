@@ -32,4 +32,18 @@ public interface IListModel<INFO, ITEM> extends IModel<INFO> {
      * @return
      */
     List<ITEM> map(INFO response);
+
+    /**
+     * 获取新增数据的大小
+     *
+     * @return
+     */
+    int getNewAddCount();
+
+    /**
+     * 获取旧数据总数
+     *
+     * @return
+     */
+    int getOldCount();
 }

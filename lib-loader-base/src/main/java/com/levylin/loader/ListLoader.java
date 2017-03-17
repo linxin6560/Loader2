@@ -1,5 +1,7 @@
 package com.levylin.loader;
 
+import android.util.Log;
+
 import com.levylin.loader.helper.intf.IListViewHelper;
 import com.levylin.loader.helper.listener.OnLoadMoreListener;
 import com.levylin.loader.listener.OnLoadListener;
@@ -11,6 +13,7 @@ import com.levylin.loader.model.IListModel;
  */
 public class ListLoader<INFO, ITEM> extends DataLoader<INFO> implements OnLoadMoreListener {
 
+    private boolean debug = false;
     private IListModel<INFO, ITEM> model;
     private IListViewHelper mListViewHelper;
 
@@ -49,6 +52,10 @@ public class ListLoader<INFO, ITEM> extends DataLoader<INFO> implements OnLoadMo
         });
     }
 
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
     @Override
     public void onRefresh() {
         model.preRefresh();
@@ -66,6 +73,7 @@ public class ListLoader<INFO, ITEM> extends DataLoader<INFO> implements OnLoadMo
      * 显示加载状态
      */
     private void showLoading() {
+        log("showLoading...");
         if (isRefreshing())
             return;
         if (isLoadingMore())
@@ -88,12 +96,14 @@ public class ListLoader<INFO, ITEM> extends DataLoader<INFO> implements OnLoadMo
      * 显示内容
      */
     private void showContent(INFO responseModel) {
+        log("showContent:responseModel=" + responseModel);
         model.setData(isRefreshing(), responseModel);
         if (isRefreshing() && mRefreshViewHelper != null) {
             mRefreshViewHelper.refreshComplete(true);
         }
         if (mListViewHelper != null) {
-            mListViewHelper.notifyAdapter();
+            log("oldCount:" + model.getOldCount() + ",newAddCount:" + model.getNewAddCount());
+            mListViewHelper.notifyAdapter(model.getOldCount(), model.getNewAddCount());
         }
         setLoadMoreState(responseModel);
         if (mLoadStateViewHelper != null) {
@@ -127,6 +137,7 @@ public class ListLoader<INFO, ITEM> extends DataLoader<INFO> implements OnLoadMo
      * @param t 异常类型
      */
     private void showError(Throwable t) {
+        log("showError:t=" + t);
         if (isRefreshing() && mRefreshViewHelper != null) {
             mRefreshViewHelper.refreshComplete(false);
         } else if (isLoadingMore()) {
@@ -143,5 +154,11 @@ public class ListLoader<INFO, ITEM> extends DataLoader<INFO> implements OnLoadMo
     public void onDestroy() {
         super.onDestroy();
         mListViewHelper = null;
+    }
+
+    private void log(String content) {
+        if (debug) {
+            Log.i("ListLoader", content);
+        }
     }
 }

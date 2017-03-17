@@ -11,8 +11,11 @@ public interface IListViewHelper {
 
     /**
      * 刷新adapter
+     *
+     * @param oldCount       旧总数
+     * @param newAddDataSize 新增数据的大小
      */
-    void notifyAdapter();
+    void notifyAdapter(int oldCount, int newAddDataSize);
 
     /**
      * 显示空闲状态

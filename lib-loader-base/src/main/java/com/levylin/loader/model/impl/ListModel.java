@@ -14,6 +14,8 @@ public abstract class ListModel<INFO, ITEM> extends Model<INFO> implements IList
     protected List<ITEM> mList;
     protected int page;
     private boolean hasNext;
+    private int newAddCount;
+    private int oldCount;
 
     public ListModel(List<ITEM> itemList) {
         this.mList = itemList;
@@ -58,6 +60,16 @@ public abstract class ListModel<INFO, ITEM> extends Model<INFO> implements IList
         if (mapList == null) {
             return;
         }
+        newAddCount = mapList.size();
+        oldCount = mList.size();
         mList.addAll(mapList);
+    }
+
+    public int getOldCount() {
+        return oldCount;
+    }
+
+    public int getNewAddCount() {
+        return newAddCount;
     }
 }

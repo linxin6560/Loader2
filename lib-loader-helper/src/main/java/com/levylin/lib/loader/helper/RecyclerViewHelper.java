@@ -70,8 +70,12 @@ public class RecyclerViewHelper implements IListViewHelper {
 
 
     @Override
-    public void notifyAdapter() {
-        mAdapter.notifyDataSetChanged();
+    public void notifyAdapter(int oldCount, int newAddCount) {
+        if (oldCount == 0) {
+            mAdapter.notifyDataSetChanged();
+        } else {
+            mAdapter.notifyItemRangeInserted(oldCount, newAddCount);
+        }
     }
 
     @Override

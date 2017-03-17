@@ -42,6 +42,7 @@ public class ListDataActivity extends BaseActivity {
         ListDataModel model = new ListDataModel(list);
         ListLoader<String, String> loader = new ListLoader<>(this, model);
         loader.setLoadStateHelper(new LoadStateHelper(layout));//控制加载中，加载失败，加载成功
+        loader.setDebug(true);
         loader.setRefreshViewHelper(new RefreshHelper(layout));//控制刷新
         loader.setListViewHelper(new RecyclerViewHelper(recyclerView, new FooterViewHelper(recyclerView)));//控制自动加载下一页
         loader.load();
