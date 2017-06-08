@@ -18,6 +18,8 @@ import me.levylin.loader.model.SingleDataModel;
  */
 public class SingleDataActivity extends BaseActivity {
 
+    private DataLoader<String> loader;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +27,7 @@ public class SingleDataActivity extends BaseActivity {
         SwipeRefreshLayout layout = (SwipeRefreshLayout) findViewById(R.id.act_single_data_sfl);
         final TextView textView = (TextView) findViewById(R.id.act_single_data_tv);
         SingleDataModel model = new SingleDataModel();
-        DataLoader<String> loader = new DataLoader<>(this, model);
+        loader = new DataLoader<>(model);
         loader.setLoadStateHelper(new LoadStateHelper(layout));
         loader.setRefreshViewHelper(new RefreshHelper(layout));
         loader.setOnLoadSuccessListener(new OnLoadSuccessListener<String>() {
@@ -35,5 +37,11 @@ public class SingleDataActivity extends BaseActivity {
             }
         });
         loader.load();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        loader.detachView();
     }
 }

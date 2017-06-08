@@ -1,6 +1,5 @@
 package com.levylin.loader;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.levylin.loader.helper.intf.IListViewHelper;
@@ -152,8 +151,8 @@ public class ListLoader<INFO, ITEM> extends DataLoader<INFO> {
     }
 
     @Override
-    public void detach2View(Context context) {
-        super.detach2View(context);
+    public void detachView() {
+        super.detachView();
         mListViewHelper = null;
     }
 

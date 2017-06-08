@@ -173,7 +173,7 @@ public class DataLoader<T> {
         }
     }
 
-    public void detach2View(Context context) {
+    public void detachView() {
         cancel();
         mLoadStateViewHelper = null;
         mRefreshViewHelper = null;
