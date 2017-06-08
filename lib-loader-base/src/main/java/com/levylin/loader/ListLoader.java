@@ -1,9 +1,11 @@
 package com.levylin.loader;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.levylin.loader.helper.intf.IListViewHelper;
 import com.levylin.loader.helper.listener.OnLoadMoreListener;
+import com.levylin.loader.helper.listener.OnReloadListener;
 import com.levylin.loader.listener.OnLoadListener;
 import com.levylin.loader.model.IListModel;
 
@@ -11,21 +13,33 @@ import com.levylin.loader.model.IListModel;
  * 分页页面数据加载
  * Created by LinXin on 2016/6/20 10:35.
  */
-public class ListLoader<INFO, ITEM> extends DataLoader<INFO> implements OnLoadMoreListener {
+public class ListLoader<INFO, ITEM> extends DataLoader<INFO> {
 
     private boolean debug = false;
     private IListModel<INFO, ITEM> model;
     private IListViewHelper mListViewHelper;
 
-    public ListLoader(ILoaderView view, IListModel<INFO, ITEM> listModel) {
-        super(view, listModel);
+    public ListLoader(IListModel<INFO, ITEM> listModel) {
+        super(listModel);
         this.model = listModel;
     }
 
     public void setListViewHelper(IListViewHelper helper) {
         this.mListViewHelper = helper;
-        this.mListViewHelper.setOnLoadMoreListener(this);
-        this.mListViewHelper.setOnReLoadMoreListener(this);
+        this.mListViewHelper.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                model.preLoadNext();
+                load();
+            }
+        });
+        this.mListViewHelper.setOnReLoadMoreListener(new OnReloadListener() {
+            @Override
+            public void onReLoad() {
+                model.preReLoad();
+                load();
+            }
+        });
     }
 
     @Override
@@ -54,19 +68,6 @@ public class ListLoader<INFO, ITEM> extends DataLoader<INFO> implements OnLoadMo
 
     public void setDebug(boolean debug) {
         this.debug = debug;
-    }
-
-    @Override
-    public void onRefresh() {
-        model.preRefresh();
-        load();
-    }
-
-
-    @Override
-    public void onLoadMore() {
-        model.preLoadNext();
-        load();
     }
 
     /**
@@ -151,8 +152,8 @@ public class ListLoader<INFO, ITEM> extends DataLoader<INFO> implements OnLoadMo
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void detach2View(Context context) {
+        super.detach2View(context);
         mListViewHelper = null;
     }
 

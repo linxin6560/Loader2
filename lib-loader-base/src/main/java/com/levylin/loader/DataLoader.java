@@ -1,5 +1,7 @@
 package com.levylin.loader;
 
+import android.content.Context;
+
 import com.levylin.loader.helper.intf.ILoadStateHelper;
 import com.levylin.loader.helper.intf.IRefreshViewHelper;
 import com.levylin.loader.helper.listener.OnRefreshListener;
@@ -13,7 +15,7 @@ import com.levylin.loader.model.IModel;
  * 页面内容加载器
  * Created by LinXin on 2016/6/14 10:22.
  */
-public class DataLoader<T> implements OnRefreshListener, OnReloadListener {
+public class DataLoader<T> {
 
     ILoadStateHelper mLoadStateViewHelper;
     IRefreshViewHelper mRefreshViewHelper;
@@ -21,22 +23,31 @@ public class DataLoader<T> implements OnRefreshListener, OnReloadListener {
     OnLoadFailureListener onLoadFailureListener;
     boolean isSilenceRefresh;//是否手动刷新
     private IModel<T> model;
-    private ILoaderView view;
 
-    public DataLoader(ILoaderView view, IModel<T> model) {
-        this.view = view;
+    public DataLoader(IModel<T> model) {
         this.model = model;
-        this.view.setDataLoader(this);
     }
 
     public void setLoadStateHelper(ILoadStateHelper helper) {
         this.mLoadStateViewHelper = helper;
-        this.mLoadStateViewHelper.setReloadListener(this);
+        this.mLoadStateViewHelper.setReloadListener(new OnReloadListener() {
+            @Override
+            public void onReLoad() {
+                model.preReLoad();
+                load();
+            }
+        });
     }
 
     public void setRefreshViewHelper(IRefreshViewHelper helper) {
         this.mRefreshViewHelper = helper;
-        mRefreshViewHelper.setOnRefreshListener(this);
+        mRefreshViewHelper.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                model.preRefresh();
+                load();
+            }
+        });
     }
 
     public void setOnLoadSuccessListener(OnLoadSuccessListener<T> listener) {
@@ -90,20 +101,9 @@ public class DataLoader<T> implements OnRefreshListener, OnReloadListener {
     /**
      * 静默刷新
      */
-    public void silenceRefresh() {
+    public void refresh() {
         isSilenceRefresh = true;
-        onRefresh();
-    }
-
-    @Override
-    public void onRefresh() {
         model.preRefresh();
-        load();
-    }
-
-    @Override
-    public void onReLoad() {
-        model.preReLoad();
         load();
     }
 
@@ -173,9 +173,8 @@ public class DataLoader<T> implements OnRefreshListener, OnReloadListener {
         }
     }
 
-    public void onDestroy() {
+    public void detach2View(Context context) {
         cancel();
-        view = null;
         mLoadStateViewHelper = null;
         mRefreshViewHelper = null;
     }
